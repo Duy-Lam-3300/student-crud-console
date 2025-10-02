@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using StudentObjects;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,15 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "";
+            if (!optionsBuilder!.IsConfigured)
+            {
+                var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+            var connectionString = config["MYSQLConnection"];
+                if (string.IsNullOrEmpty(connectionString)) {
+                    throw new Exception("Environment variable MYSQLConnection not set!");
+                }
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            }
         }
     }
 }
