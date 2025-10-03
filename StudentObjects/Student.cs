@@ -13,6 +13,8 @@ namespace StudentObjects
         
         public DateTime DateOfBirth { get; set; }
 
+        public bool IsDeleted { get; set; }
+
 
     }
 }

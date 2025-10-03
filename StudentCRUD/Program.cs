@@ -30,6 +30,7 @@ namespace StudentCRUD
                     case "2": ViewsStudent(repo); break;
                     case "3": FindStudentName(repo); break;
                     case "4": UpdateStudent(repo); break;
+                    case "5": DeleteStudent(repo); break;
 
                     case "6": return;
                     default: Console.WriteLine("Invalid option!");break;
@@ -146,6 +147,33 @@ namespace StudentCRUD
             return;
 
 
+        }
+        static void DeleteStudent(StudentRepo repo)
+        {
+            var students = FindStudentName(repo);
+            Console.WriteLine("Choose student's order: ");
+            int index;
+            while (!int.TryParse(Console.ReadLine(), out index) || index < 1 || index > students.Count())
+            {
+                Console.WriteLine("Choose student's order: ");
+            }
+            var choosedStudent = students.ElementAt(index - 1);
+
+            Console.WriteLine($"Student: {choosedStudent.Name} \t | Date of birth: {choosedStudent.DateOfBirth}");
+            Console.WriteLine("Are you sure to delete studennt "+ choosedStudent.Name+"? (yes/no)");
+            string option = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(option)||(option.Trim().ToLower()!="yes"&& option.Trim().ToLower() != "no")) {
+               option = Console.ReadLine();
+            }
+            if (option.Trim().ToLower() == "yes")
+            {
+                repo.DeleteStudent(choosedStudent.Id);
+                Console.WriteLine("Delete successfully!");
+                return;
+            }
+            Console.WriteLine("Student unchanged!");
+
+            return;
         }
     }
 }

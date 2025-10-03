@@ -28,18 +28,19 @@ namespace Repositories
             var student = _context.Students.Find(id);
             if (student != null)
             {
-                _context.Students.Remove(student);
+                student.IsDeleted=true;
+                _context.Students.Update(student);
                 _context.SaveChanges();
             }
         }
 
         public IEnumerable<Student> GetAll()
         {
-            return _context.Students.ToList();
+            return _context.Students.ToList().Where(x=>x.IsDeleted==false);
         }
         public IEnumerable<Student> GetByName(string stuName)
         {
-            return _context.Students.Where(x=>x.Name.ToLower().Trim().Contains(stuName.ToLower().Trim())).ToList();
+            return _context.Students.Where(x=>x.Name.ToLower().Trim().Contains(stuName.ToLower().Trim())).ToList().Where(x => x.IsDeleted == false);
         }
 
         public Student? GetById(int id)

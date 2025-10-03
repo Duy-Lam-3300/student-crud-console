@@ -24,6 +24,7 @@ namespace DataAccess
                 }
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             }
+
         }
     }
 }
