@@ -12,6 +12,8 @@ namespace DataAccess
     public class AppDBContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<School> Schools { get; set; }
+        public DbSet<Grade> Grades { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

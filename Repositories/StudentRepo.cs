@@ -40,7 +40,7 @@ namespace Repositories
         }
         public IEnumerable<Student> GetByName(string stuName)
         {
-            return _context.Students.Where(x=>x.Name.ToLower().Trim().Contains(stuName.ToLower().Trim())).ToList().Where(x => x.IsDeleted == false);
+            return _context.Students.Where(x=>x.LastName.ToLower().Trim().Contains(stuName.ToLower().Trim())).ToList().Where(x => x.IsDeleted == false);
         }
 
         public Student? GetById(int id)

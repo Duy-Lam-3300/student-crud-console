@@ -20,7 +20,8 @@ namespace StudentCRUD
                 Console.WriteLine("3. Find Student's Name");
                 Console.WriteLine("4. Update Student");
                 Console.WriteLine("5. Delete Student");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("6. Seeding Data");
+                Console.WriteLine("7. Exit");
                 Console.Write("Choose an option: ");
                 string choice = Console.ReadLine();
 
@@ -31,8 +32,8 @@ namespace StudentCRUD
                     case "3": FindStudentName(repo); break;
                     case "4": UpdateStudent(repo); break;
                     case "5": DeleteStudent(repo); break;
-
-                    case "6": return;
+                    case "6": SeedingRepo.Seed(context);Console.WriteLine("Sample data seeded successfully!"); break;
+                    case "7": return;
                     default: Console.WriteLine("Invalid option!");break;
 
 
@@ -48,7 +49,7 @@ namespace StudentCRUD
             Console.WriteLine("Enter date of birth (yyyy-mm-dd): ");
             DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
 
-            repo.AddStudent(new Student { Name=name, DateOfBirth=dateOfBirth });
+            repo.AddStudent(new Student { LastName=name, DateOfBirth=dateOfBirth });
 
             Console.WriteLine("Student "+name+" added successfully");
 
@@ -65,7 +66,7 @@ namespace StudentCRUD
             foreach(var s in students)
             {
                 order++;
-                Console.WriteLine($"{order}: {s.Name}, Date of birth: {s.DateOfBirth}");
+                Console.WriteLine($"{order}: {s.LastName}, Date of birth: {s.DateOfBirth}");
             }
 
         }
@@ -85,11 +86,11 @@ namespace StudentCRUD
                 return null;
 
             }
-            Console.WriteLine("Order \t| Name \t| Date of birth");
+            Console.WriteLine("Order \t| LastName \t| Date of birth");
             foreach(var s in students)
             {
                 order++;
-                Console.WriteLine($"{order} \t| {s.Name} \t| Date of birth: {s.DateOfBirth}");
+                Console.WriteLine($"{order} \t| {s.LastName} \t| Date of birth: {s.DateOfBirth}");
             }
             return students.ToList();
 
@@ -104,13 +105,13 @@ namespace StudentCRUD
             }
             var choosedStudent = students.ElementAt(index - 1);
 
-            Console.WriteLine($"You choose: {choosedStudent.Name} \t | Date of birth: {choosedStudent.DateOfBirth}");
+            Console.WriteLine($"You choose: {choosedStudent.LastName} \t | Date of birth: {choosedStudent.DateOfBirth}");
 
             Console.WriteLine("New student's name: ");
             var newName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(newName))
             {
-                choosedStudent.Name = newName;
+                choosedStudent.LastName = newName;
             } else
             {
                 Console.WriteLine("Student's name unchanged!");
@@ -143,7 +144,7 @@ namespace StudentCRUD
             }
 
             repo.UpdateStudent(choosedStudent);
-            Console.WriteLine($"Student updated to: {choosedStudent.Name} \t| {choosedStudent.DateOfBirth}");
+            Console.WriteLine($"Student updated to: {choosedStudent.LastName} \t| {choosedStudent.DateOfBirth}");
             return;
 
 
@@ -159,8 +160,8 @@ namespace StudentCRUD
             }
             var choosedStudent = students.ElementAt(index - 1);
 
-            Console.WriteLine($"Student: {choosedStudent.Name} \t | Date of birth: {choosedStudent.DateOfBirth}");
-            Console.WriteLine("Are you sure to delete studennt "+ choosedStudent.Name+"? (yes/no)");
+            Console.WriteLine($"Student: {choosedStudent.LastName} \t | Date of birth: {choosedStudent.DateOfBirth}");
+            Console.WriteLine("Are you sure to delete studennt "+ choosedStudent.LastName+"? (yes/no)");
             string option = Console.ReadLine();
             while (string.IsNullOrWhiteSpace(option)||(option.Trim().ToLower()!="yes"&& option.Trim().ToLower() != "no")) {
                option = Console.ReadLine();
@@ -175,5 +176,6 @@ namespace StudentCRUD
 
             return;
         }
+     
     }
 }
